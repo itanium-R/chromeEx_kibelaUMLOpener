@@ -34,7 +34,7 @@ function openUML(btnElm) {
  */
 function putOpenUMLBtns() {
     // 多重設置防止
-    if(document.querySelectorAll('.openUMLBtn')) return;
+    if(document.querySelectorAll('.openUMLBtn').length > 0) return;
     
     // 各UMLにボタン設置
     for(umlElm of document.querySelectorAll('.plantuml')){
