@@ -33,6 +33,9 @@ function openUML(btnElm) {
  * UML図を別タブで開くボタンを設置する
  */
 function putOpenUMLBtns() {
+    // 多重設置防止
+    if(document.querySelectorAll('.openUMLBtn')) return;
+    
     for(umlElm of document.querySelectorAll('.plantuml')){
         btnElm = document.createElement('button');
         btnElm.innerHTML      = NEW_TAB_ICON_HTML;
