@@ -1,4 +1,11 @@
-const NEW_TAB_ICON_HTML = `<svg style="width:20px;height:20px;fill:#666;" focusable="false"><use xlink:href="#ks-fullwidth-open"></use></svg>`;
+const NEW_TAB_ICON_HTML      = `<svg style="width:20px;height:20px;fill:#666;" focusable="false">
+                                    <use xlink:href="#ks-fullwidth-open"></use></svg>`;
+const IMAGE_PAGE_TEMPLATE    = `<html>
+                                    <head>
+                                        <style>*{margin:0;padding:0;width:100vw;height:100vh;border:0;}</style>
+                                    </head>
+                                    <body></body>
+                                </html>`;
 
 /**
  * 引数のボタン要素が何番目のOpenUMLBtnかを返す
@@ -11,10 +18,10 @@ function getOpenUMLBtnIndex(btnElm) {
 }
 
 /**
- * データURLの画像を新しいタブで開く
+ * データURLの画像を新しいタブでiframeで開く
  * @param {String} dataUrl 別タブで開く画像のdataURL
  */
-function openDataImage(dataUrl) {
+function openDataImageByIframe(dataUrl) {
     const w = window.open('about:blank');
     w.document.write(`<style>*{margin:0;padding:0;width:100vw;height:100vh;border:0;}</style><iframe src='${dataUrl}'>`);
 }
@@ -26,7 +33,7 @@ function openDataImage(dataUrl) {
 function openUML(btnElm) {
     const index = getOpenUMLBtnIndex(btnElm);
     const dataUrl = btnElm.parentElement.parentElement.querySelectorAll('img')[index].src;
-    openDataImage(dataUrl);
+    openDataImageByIframe(dataUrl);
 }
 
 /**
