@@ -25,7 +25,6 @@ function openDataImageByIframe(dataUrl) {
     const w = window.open('about:blank');
     const iframeElm  = document.createElement('iframe');
     iframeElm.src    = dataUrl;
-    iframeElm.onload = () =>{console.log('onload done')};
     w.document.write(IMAGE_PAGE_TEMPLATE);
     w.document.querySelector('body').append(iframeElm);
 }
