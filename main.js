@@ -23,7 +23,11 @@ function getOpenUMLBtnIndex(btnElm) {
  */
 function openDataImageByIframe(dataUrl) {
     const w = window.open('about:blank');
-    w.document.write(`<style>*{margin:0;padding:0;width:100vw;height:100vh;border:0;}</style><iframe src='${dataUrl}'>`);
+    const iframeElm  = document.createElement('iframe');
+    iframeElm.src    = dataUrl;
+    iframeElm.onload = () =>{console.log('onload done')};
+    w.document.write(IMAGE_PAGE_TEMPLATE);
+    w.document.querySelector('body').append(iframeElm);
 }
 
 /**
