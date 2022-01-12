@@ -6,6 +6,7 @@ const IMAGE_PAGE_TEMPLATE    = `<html>
                                     </head>
                                     <body></body>
                                 </html>`;
+const URL_REGEXP_PTN         = /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#\u3000-\u30FE\u4E00-\u9FA0\uFF01-\uFFE3]+/g;
 
 /**
  * 引数のボタン要素が何番目のOpenUMLBtnかを返す
@@ -29,6 +30,44 @@ function openDataImageByIframe(dataUrl) {
     w.document.querySelector('body').append(iframeElm);
 }
 
+
+/**
+ * データURLの画像を新しいタブで開く
+ * @param {String} dataUrl 別タブで開く画像のdataURL
+ * @returns 
+ */
+function openDataImage(dataUrl) {
+
+    // 本関数で解析可能なBASE64なら、data部分を取得する。
+    // 取得不可ならdataURLをiframeで開く。
+    let parsableBase64Data = dataUrl.match(/data\:image\/svg\+xml\;charset\=utf\-8\;base64,(.*)/);
+    if(!parsableBase64Data) {
+        openDataImageByIframe(dataUrl);
+        return;
+    } 
+    parsableBase64Data = parsableBase64Data[1];
+
+    const w = window.open('about:blank');
+    const decodedUtf8str = atob(parsableBase64Data);
+    const decodedArray = new Uint8Array(Array.prototype.map.call(decodedUtf8str, c => c.charCodeAt()));
+    const decodedData = new TextDecoder().decode(decodedArray);
+    w.document.querySelector('body').innerHTML += decodedData;
+    
+    // URLを見つけたとき、リンクを貼る。
+    for(t of w.document.querySelectorAll('svg > g > text')){
+        const matchedUrls = t.innerHTML.match(URL_REGEXP_PTN);
+
+        console.log(t.innerHTML, matchedUrls);
+
+        // 0または2つ以上のリンクがある時はリンクを貼らない。
+        if(!matchedUrls || matchedUrls.length !== 1) continue;
+
+        //textのouterにリンク貼る（innerは強制escapeされるため。貼れるリンクは1textにつき1つまで。）
+        t.outerHTML = `<a href="${matchedUrls[0]}" target="_blank">${t.outerHTML}</a>`;
+    }
+}
+
+
 /**
  * 引数で指定したボタンに対応するUML画像を開く
  * @param {Element} btnElm OpenUMLBtnElement
@@ -36,7 +75,7 @@ function openDataImageByIframe(dataUrl) {
 function openUML(btnElm) {
     const index = getOpenUMLBtnIndex(btnElm);
     const dataUrl = btnElm.parentElement.parentElement.querySelectorAll('img')[index].src;
-    openDataImageByIframe(dataUrl);
+    openDataImage(dataUrl);
 }
 
 /**
