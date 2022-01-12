@@ -62,7 +62,7 @@ function openDataImage(dataUrl) {
         // 0または2つ以上のリンクがある時はリンクを貼らない。
         if(!matchedUrls || matchedUrls.length !== 1) continue;
 
-        //textのouterにリンク貼る（innerは強制escapeされるため。貼れるリンクは1textにつき1つまで。）
+        // textのouterにリンク貼る（innerは強制escapeされるため。貼れるリンクは1textにつき1つまで。）
         t.outerHTML = `<a href="${matchedUrls[0]}" target="_blank">${t.outerHTML}</a>`;
     }
 }
