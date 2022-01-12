@@ -30,7 +30,6 @@ function openDataImageByIframe(dataUrl) {
     newTab.document.querySelector('body').append(iframeElm);
 }
 
-
 /**
  * データURLの画像を新しいタブで開く
  * @param {String} dataUrl 別タブで開く画像のdataURL
@@ -66,7 +65,6 @@ function openDataImage(dataUrl) {
         t.outerHTML = `<a href="${matchedUrls[0]}" target="_blank">${t.outerHTML}</a>`;
     }
 }
-
 
 /**
  * 引数で指定したボタンに対応するUML画像を開く
