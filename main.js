@@ -39,15 +39,15 @@ function putOpenUMLBtns() {
     // 各UMLにボタン設置
     for(umlElm of document.querySelectorAll('.plantuml')){
         btnElm = document.createElement('button');
-        btnElm.innerHTML      = NEW_TAB_ICON_HTML;
-        btnElm.className      = 'openUMLBtn';
-        btnElm.style.position = 'absolute';
-        btnElm.style.top      = '0';
-        btnElm.style.right    = '0';
-        btnElm.style.border   = '0';
+        btnElm.innerHTML        = NEW_TAB_ICON_HTML;
+        btnElm.className        = 'openUMLBtn';
+        btnElm.style.position   = 'absolute';
+        btnElm.style.top        = '0';
+        btnElm.style.right      = '0';
+        btnElm.style.border     = '0';
         btnElm.style.background = 'none';
         btnElm.addEventListener('click', function(){openUML(this)}, false);
-        umlElm.style.position      = 'relative';
+        umlElm.style.position   = 'relative';
         umlElm.append(btnElm);
     }
 }
