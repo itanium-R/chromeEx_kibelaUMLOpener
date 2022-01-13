@@ -56,8 +56,6 @@ function openDataImage(dataUrl) {
     for(t of newTab.document.querySelectorAll('svg > g > text')){
         const matchedUrls = t.innerHTML.match(URL_REGEXP_PTN);
 
-        console.log(t.innerHTML, matchedUrls);
-
         // 0または2つ以上のリンクがある時はリンクを貼らない。
         if(!matchedUrls || matchedUrls.length !== 1) continue;
 
