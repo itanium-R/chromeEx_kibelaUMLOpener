@@ -46,7 +46,7 @@ function openDataImage(dataUrl) {
     } 
     parsableBase64Data = parsableBase64Data[1];
 
-    const newTab = window.open('about:blank');
+    const newTab         = window.open('about:blank');
     const decodedUtf8str = atob(parsableBase64Data);
     const decodedArray   = new Uint8Array(Array.prototype.map.call(decodedUtf8str, c => c.charCodeAt()));
     const decodedData    = new TextDecoder().decode(decodedArray);
@@ -69,7 +69,7 @@ function openDataImage(dataUrl) {
  * @param {Element} btnElm OpenUMLBtnElement
  */
 function openUML(btnElm) {
-    const index = getOpenUMLBtnIndex(btnElm);
+    const index   = getOpenUMLBtnIndex(btnElm);
     const dataUrl = btnElm.parentElement.parentElement.querySelectorAll('img')[index].src;
     openDataImage(dataUrl);
 }
