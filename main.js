@@ -23,7 +23,7 @@ function getOpenUMLBtnIndex(btnElm) {
  * @param {String} dataUrl 別タブで開く画像のdataURL
  */
 function openDataImageByIframe(dataUrl) {
-    const newTab = window.open('about:blank');
+    const newTab     = window.open('about:blank');
     const iframeElm  = document.createElement('iframe');
     iframeElm.src    = dataUrl;
     newTab.document.write(IMAGE_PAGE_TEMPLATE);
@@ -48,8 +48,8 @@ function openDataImage(dataUrl) {
 
     const newTab = window.open('about:blank');
     const decodedUtf8str = atob(parsableBase64Data);
-    const decodedArray = new Uint8Array(Array.prototype.map.call(decodedUtf8str, c => c.charCodeAt()));
-    const decodedData = new TextDecoder().decode(decodedArray);
+    const decodedArray   = new Uint8Array(Array.prototype.map.call(decodedUtf8str, c => c.charCodeAt()));
+    const decodedData    = new TextDecoder().decode(decodedArray);
     newTab.document.querySelector('body').innerHTML += decodedData;
     
     // URLを見つけたとき、リンクを貼る。
