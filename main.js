@@ -53,7 +53,7 @@ function openDataImage(dataUrl) {
     newTab.document.querySelector('body').innerHTML += decodedData;
     
     // URLを見つけたとき、リンクを貼る。
-    for(t of newTab.document.querySelectorAll('svg > g > text')){
+    for(const t of newTab.document.querySelectorAll('svg > g > text')){
         const matchedUrls = t.innerHTML.match(URL_REGEXP_PTN);
 
         // 0または2つ以上のリンクがある時はリンクを貼らない。
@@ -82,7 +82,7 @@ function putOpenUMLBtns() {
     if(document.querySelectorAll('.openUMLBtn').length > 0) return;
     
     // 各UMLにボタン設置
-    for(umlElm of document.querySelectorAll('.plantuml')){
+    for(const umlElm of document.querySelectorAll('.plantuml')){
         btnElm = document.createElement('button');
         btnElm.innerHTML        = NEW_TAB_ICON_HTML;
         btnElm.className        = 'openUMLBtn';
