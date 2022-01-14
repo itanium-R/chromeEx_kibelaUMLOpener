@@ -112,10 +112,10 @@ function getParam(name) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function openUMLImagePageByParam(umlIndex) {
+function openUMLImagePageByParam(umlIndex = Number(getParam('openUml'))) {
     const dataUrl = document.querySelectorAll('.plantuml')[umlIndex].querySelector('img').src;
     openDataImage(dataUrl);
 }
 
-openUMLImagePageByParam(getParam('openUml'));
 putOpenUMLBtns();
+if(getParam('openUml')) openUMLImagePageByParam();
