@@ -117,5 +117,5 @@ function openUMLImagePageByParam(umlIndex) {
     openDataImage(dataUrl);
 }
 
-redirectUMLImagePage(getParam('openUml'));
+openUMLImagePageByParam(getParam('openUml'));
 putOpenUMLBtns();
