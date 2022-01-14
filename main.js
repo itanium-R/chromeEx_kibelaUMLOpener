@@ -99,22 +99,29 @@ function putOpenUMLBtns() {
 
 /**
  * クエリパラメータ取得
- *
- * @param  {String} name {string} パラメータのキー文字列
+ * @param  {String} key {string} パラメータのキー文字列
  */
-function getParam(name) {
-    const url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+function getParam(key) {
+    const url     = window.location.href;
+    const regex   = new RegExp("[?&]" + key.replace(/[\[\]]/g, "\\$&") + "(=([^&#]*)|&|#|$)");
     const results = regex.exec(url);
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+/**
+ * パラメータで指定された番号のUMLを開く
+ * 引数なしで実行すると、クエリパラメータの'openUml'の値を用いる
+ * @param {Number} umlIndex 開くUMLの番号（０始まり、ページの上から数える）
+ */
 function openUMLImagePageByParam(umlIndex = Number(getParam('openUml'))) {
-    const dataUrl = document.querySelectorAll('.plantuml')[umlIndex].querySelector('img').src;
-    openDataImage(dataUrl);
+    try {
+        const dataUrl = document.querySelectorAll('.plantuml')[umlIndex].querySelector('img').src;
+        openDataImage(dataUrl);
+    } catch(e) {
+        console.error(`パラメータが不正です\n param:${umlIndex}\n error:${e}`);
+    } 
 }
 
 putOpenUMLBtns();
