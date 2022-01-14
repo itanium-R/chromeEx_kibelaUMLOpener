@@ -97,4 +97,25 @@ function putOpenUMLBtns() {
     }
 }
 
+/**
+ * クエリパラメータ取得
+ *
+ * @param  {String} name {string} パラメータのキー文字列
+ */
+function getParam(name) {
+    const url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+    const results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function redirectUMLImagePage(umlIndex) {
+    const dataUrl = document.querySelectorAll('.plantuml')[umlIndex].querySelector('img').src;
+    openDataImage(dataUrl);
+}
+
+redirectUMLImagePage(getParam('openUml'));
 putOpenUMLBtns();
