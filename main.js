@@ -112,7 +112,7 @@ function getParam(name) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function redirectUMLImagePage(umlIndex) {
+function openUMLImagePageByParam(umlIndex) {
     const dataUrl = document.querySelectorAll('.plantuml')[umlIndex].querySelector('img').src;
     openDataImage(dataUrl);
 }
