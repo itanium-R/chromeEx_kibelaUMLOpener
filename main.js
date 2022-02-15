@@ -125,7 +125,7 @@ function getParam(key) {
  */
 function openUMLImagePage(umlIndex = Number(getParam('openUml'))) {
     try {
-        const dataUrl = document.querySelectorAll('.plantuml')[umlIndex].querySelector('img').src;
+        const dataUrl = getUmlDataUrl(umlIndex);
         openDataImage(dataUrl);
     } catch(e) {
         console.error(`パラメータが不正です\n param:${umlIndex}\n error:${e}`);
