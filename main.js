@@ -11,7 +11,7 @@ const URL_REGEXP_PTN         = /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#\u
 /**
  * 引数のボタン要素が何番目のOpenUMLBtnかを返す
  * @param {Element} btnElm OpenUMLBtnElement
- * @returns {Nunber} 引数の要素が何番目か
+ * @returns {Number} 引数の要素が何番目か
  */
 function getOpenUMLBtnIndex(btnElm) {
     const elms = Array.from(document.querySelectorAll('.openUMLBtn'));
@@ -113,9 +113,9 @@ function getParam(key) {
 /**
  * パラメータで指定された番号のUMLを開く
  * 引数なしで実行すると、クエリパラメータの'openUml'の値を用いる
- * @param {Number} umlIndex 開くUMLの番号（０始まり、ページの上から数える）
+ * @param {Number} umlIndex 開くUMLの番号（0始まり、ページの上から数える）
  */
-function openUMLImagePageByParam(umlIndex = Number(getParam('openUml'))) {
+function openUMLImagePage(umlIndex = Number(getParam('openUml'))) {
     try {
         const dataUrl = document.querySelectorAll('.plantuml')[umlIndex].querySelector('img').src;
         openDataImage(dataUrl);
@@ -125,4 +125,5 @@ function openUMLImagePageByParam(umlIndex = Number(getParam('openUml'))) {
 }
 
 putOpenUMLBtns();
-if(getParam('openUml')) openUMLImagePageByParam();
+// URLパラメータで開くUMLが指定されているとき、UMLを開く
+if(getParam('openUml')) openUMLImagePage();
