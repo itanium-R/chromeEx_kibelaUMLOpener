@@ -19,6 +19,15 @@ function getOpenUMLBtnIndex(btnElm) {
 }
 
 /**
+ * 引数で与えられた umlIndex 番目（0始まり）の UML の data URL を取得する
+ * @param {Number} umlIndex 開くUMLの番号（0始まり、ページの上から数える）
+ * @returns umlIndex 番目（0始まり）の UML の data URL 
+ */
+function getUmlDataUrl(umlIndex) {
+    return document.querySelectorAll('.plantuml')[umlIndex].querySelector('img').src;
+}
+
+/**
  * データURLの画像を新しいタブでiframeで開く
  * @param {String} dataUrl 別タブで開く画像のdataURL
  */
@@ -69,9 +78,8 @@ function openDataImage(dataUrl) {
  * @param {Element} btnElm OpenUMLBtnElement
  */
 function openUML(btnElm) {
-    const index   = getOpenUMLBtnIndex(btnElm);
-    const dataUrl = btnElm.parentElement.parentElement.querySelectorAll('img')[index].src;
-    openDataImage(dataUrl);
+    const umlIndex   = getOpenUMLBtnIndex(btnElm);
+    openUMLImagePage(umlIndex);
 }
 
 /**
