@@ -121,7 +121,7 @@ function openUMLImagePage(umlIndex = Number(getParam('openUml'))) {
  * @returns {string|null}
  */
 function getBase64DataFromSvgXmlImgDataUri(src) {
-    const dataUriMatchResult = src.match(/data\:image\/svg\+xml\;(.*)base64,(.*)/);
+    const dataUriMatchResult = src.match(/data\:image\/svg\+xml(.*)\;base64,(.*)/);
     if(!dataUriMatchResult) return null;
     return dataUriMatchResult[2];
 }
