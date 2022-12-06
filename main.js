@@ -118,7 +118,7 @@ function openUMLImagePage(umlIndex = Number(getParam('openUml'))) {
  * パラメータのdataURIからbase64のdata部分を取り出し返す。
  * パラメータがdataURL(svg+xml)以外のときはnullを返す。
  * @param {String} src 調べたい画像ソース
- * @returns {string|null}
+ * @returns {String|Null}
  */
 function getBase64DataFromSvgXmlImgDataUri(src) {
     const dataUriMatchResult = src.match(/data\:image\/svg\+xml(.*)\;base64,(.*)/);
