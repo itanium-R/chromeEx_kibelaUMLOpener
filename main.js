@@ -19,50 +19,32 @@ function getOpenUMLBtnIndex(btnElm) {
 }
 
 /**
- * 引数で与えられた umlIndex 番目（0始まり）の UML の data URL を取得する
+ * 引数で与えられた umlIndex 番目（0始まり）の UML の data URI を取得する
  * @param {Number} umlIndex 開くUMLの番号（0始まり、ページの上から数える）
- * @returns umlIndex 番目（0始まり）の UML の data URL 
+ * @returns {String} umlIndex 番目（0始まり）の UML の data URI
  */
 function getUmlDataUrl(umlIndex) {
     return document.querySelectorAll('.plantuml')[umlIndex].querySelector('img').src;
 }
 
 /**
- * データURLの画像を新しいタブでiframeで開く
- * @param {String} dataUrl 別タブで開く画像のdataURL
- */
-function openDataImageByIframe(dataUrl) {
-    const newTab     = window.open('about:blank');
-    const iframeElm  = document.createElement('iframe');
-    iframeElm.src    = dataUrl;
-    newTab.document.write(IMAGE_PAGE_TEMPLATE);
-    newTab.document.querySelector('body').append(iframeElm);
-}
-
-/**
  * データURLの画像を新しいタブで開く
- * @param {String} dataUrl 別タブで開く画像のdataURL
- * @returns 
+ * @param {String} dataUri 別タブで開く画像のdataURI
  */
-function openDataImage(dataUrl) {
+function openDataImage(dataUri) {
 
-    // 本関数で解析可能なBASE64なら、data部分を取得する。
-    // 取得不可ならdataURLをiframeで開く。
-    let parsableBase64Data = dataUrl.match(/data\:image\/svg\+xml\;charset\=utf\-8\;base64,(.*)/);
-    if(!parsableBase64Data) {
-        openDataImageByIframe(dataUrl);
-        return;
-    } 
-    parsableBase64Data = parsableBase64Data[1];
+    // base64dataを取得 取得不可なら終了
+    const base64data = getBase64DataFromSvgXmlImgDataUri(dataUri);
+    if(!base64data) return;
 
     const newTab         = window.open('about:blank');
-    const decodedUtf8str = atob(parsableBase64Data);
+    const decodedUtf8str = atob(base64data);
     const decodedArray   = new Uint8Array(Array.prototype.map.call(decodedUtf8str, c => c.charCodeAt()));
     const decodedData    = new TextDecoder().decode(decodedArray);
     newTab.document.querySelector('body').innerHTML += decodedData;
     
     // URLを見つけたとき、リンクを貼る。
-    for(const t of newTab.document.querySelectorAll('svg > g > text')){
+    for(const t of newTab.document.querySelectorAll('g > text')){
         const matchedUrls = t.innerHTML.match(URL_REGEXP_PTN);
 
         // 0または2つ以上のリンクがある時はリンクを貼らない。
@@ -125,11 +107,23 @@ function getParam(key) {
  */
 function openUMLImagePage(umlIndex = Number(getParam('openUml'))) {
     try {
-        const dataUrl = getUmlDataUrl(umlIndex);
-        openDataImage(dataUrl);
+        const dataUri = getUmlDataUrl(umlIndex);
+        openDataImage(dataUri);
     } catch(e) {
         console.error(`パラメータが不正です\n param:${umlIndex}\n error:${e}`);
     } 
+}
+
+/**
+ * パラメータのdataURIからbase64のdata部分を取り出し返す。
+ * パラメータがdataURL(svg+xml)以外のときはnullを返す。
+ * @param {String} src 調べたい画像ソース
+ * @returns {string|null}
+ */
+function getBase64DataFromSvgXmlImgDataUri(src) {
+    const dataUriMatchResult = src.match(/data\:image\/svg\+xml\;(.*)base64,(.*)/);
+    if(!dataUriMatchResult) return null;
+    return dataUriMatchResult[2];
 }
 
 putOpenUMLBtns();
