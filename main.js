@@ -23,7 +23,7 @@ function getOpenUMLBtnIndex(btnElm) {
  * @param {Number} umlIndex 開くUMLの番号（0始まり、ページの上から数える）
  * @returns {String} umlIndex 番目（0始まり）の UML の data URI
  */
-function getUmlDataUrl(umlIndex) {
+function getUmlDataUri(umlIndex) {
     return document.querySelectorAll('.plantuml')[umlIndex].querySelector('img').src;
 }
 
@@ -107,7 +107,7 @@ function getParam(key) {
  */
 function openUMLImagePage(umlIndex = Number(getParam('openUml'))) {
     try {
-        const dataUri = getUmlDataUrl(umlIndex);
+        const dataUri = getUmlDataUri(umlIndex);
         openDataImage(dataUri);
     } catch(e) {
         console.error(`パラメータが不正です\n param:${umlIndex}\n error:${e}`);
@@ -116,7 +116,7 @@ function openUMLImagePage(umlIndex = Number(getParam('openUml'))) {
 
 /**
  * パラメータのdataURIからbase64のdata部分を取り出し返す。
- * パラメータがdataURL(svg+xml)以外のときはnullを返す。
+ * パラメータがDataURI(svg+xml)以外のときはnullを返す。
  * @param {String} src 調べたい画像ソース
  * @returns {String|Null}
  */
